@@ -3,8 +3,6 @@ package com.corecrew.tablemanager.models;
 import com.corecrew.tablemanager.models.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Data
