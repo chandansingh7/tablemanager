@@ -25,6 +25,9 @@ public class AuthController {
 
     @PostMapping("/public/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
+        if (registerRequest.getRole() == null) {
+            return ResponseEntity.badRequest().body("Role must be provided");
+        }
         User user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setPassword(registerRequest.getPassword());
