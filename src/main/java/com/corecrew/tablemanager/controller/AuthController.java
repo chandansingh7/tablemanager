@@ -5,6 +5,7 @@ import com.corecrew.tablemanager.dtos.RegisterRequest;
 import com.corecrew.tablemanager.models.User;
 import com.corecrew.tablemanager.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,7 @@ public class AuthController {
     }
 
     @PostMapping("/public/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<?> registerUsers(@RequestBody RegisterRequest registerRequest){
         if (registerRequest.getRole() == null) {
             return ResponseEntity.badRequest().body("Role must be provided");
         }
@@ -33,7 +34,8 @@ public class AuthController {
         user.setPassword(registerRequest.getPassword());
         user.setEmail(registerRequest.getEmail());
         user.setRole(registerRequest.getRole());
-        userService.registerUser(user);
-        return ResponseEntity.ok("User registered successfully");
+        User registeredUser = userService.registerUser(user);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(registeredUser);
     }
 }

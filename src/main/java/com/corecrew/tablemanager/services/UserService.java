@@ -2,6 +2,7 @@ package com.corecrew.tablemanager.services;
 
 
 import com.corecrew.tablemanager.dtos.LoginRequest;
+import com.corecrew.tablemanager.exceptions.UserAlreadyExistsException;
 import com.corecrew.tablemanager.models.User;
 import com.corecrew.tablemanager.repository.UserRepository;
 import com.corecrew.tablemanager.security.jwt.JwtAuthenticationResponse;
@@ -41,8 +42,13 @@ public class UserService {
 
 
     public User registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
+        if (userRepository.existsByUsername(user.getUsername())) {
+            System.out.println("user exists");
+            throw new UserAlreadyExistsException("A user with this username already exists.");
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepository.save(user);
+        }
     }
 
     public User findByUsername(String name) {
