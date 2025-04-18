@@ -16,6 +16,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -43,7 +45,6 @@ public class UserService {
 
     public User registerUser(User user) {
         if (userRepository.existsByUsername(user.getUsername())) {
-            System.out.println("user exists");
             throw new UserAlreadyExistsException("A user with this username already exists.");
         } else {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -55,5 +56,12 @@ public class UserService {
         return userRepository.findByUsername(name).orElseThrow(
                 ()-> new UsernameNotFoundException("User not found with username")
         );
+    }
+
+    public List<User> getUserList() {
+        if (userRepository.findAll().isEmpty()) {
+            throw new UsernameNotFoundException("No user exists.");
+        }
+        return userRepository.findAll();
     }
 }
