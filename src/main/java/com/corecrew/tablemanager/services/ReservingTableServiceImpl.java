@@ -6,7 +6,6 @@ import com.corecrew.tablemanager.models.ReservingTable;
 import com.corecrew.tablemanager.repository.ReservingTableRepository;
 import com.corecrew.tablemanager.services.interfaces.ReservingTableService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
