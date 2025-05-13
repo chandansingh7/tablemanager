@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "reserving_table")
 public class ReservingTable {
 
@@ -18,6 +19,7 @@ public class ReservingTable {
     
     private int number;
     private int capacity;
+    private double pph; //price per hour
 
     @Enumerated(EnumType.STRING)
     private TableStatus status = TableStatus.AVAILABLE;

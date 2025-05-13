@@ -20,8 +20,9 @@ public class ReservingTableServiceImpl implements ReservingTableService {
     @Override
     public ReservingTableResponseDto create(ReservingTableRequestDto dto) {
         ReservingTable reservingTable = new ReservingTable();
-        reservingTable.setNumber(dto.getNumber());
+        reservingTable.setNumber(dto.getTableNumber());
         reservingTable.setCapacity(dto.getCapacity());
+        reservingTable.setPph(dto.getPph());
         reservingTable.setStatus(dto.getStatus());
 
         ReservingTable saved = tableRepository.save(reservingTable);
@@ -34,7 +35,8 @@ public class ReservingTableServiceImpl implements ReservingTableService {
         ReservingTableResponseDto responseDto = new ReservingTableResponseDto();
         responseDto.setId(saved.getId());
         responseDto.setCapacity(saved.getCapacity());
-        responseDto.setNumber(saved.getNumber());
+        responseDto.setTableNumber(saved.getNumber());
+        responseDto.setPph(saved.getPph());
         responseDto.setStatus(saved.getStatus());
 
         return responseDto;
@@ -60,7 +62,7 @@ public class ReservingTableServiceImpl implements ReservingTableService {
         ReservingTable reservingTable = tableRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Table not found with id: " + id));
 
-        reservingTable.setNumber(dto.getNumber());
+        reservingTable.setNumber(dto.getTableNumber());
         reservingTable.setCapacity(dto.getCapacity());
         reservingTable.setStatus(dto.getStatus());
 

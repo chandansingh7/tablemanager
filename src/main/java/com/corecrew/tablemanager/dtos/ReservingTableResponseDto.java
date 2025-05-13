@@ -6,8 +6,10 @@ import lombok.Data;
 
 @Data
 public class ReservingTableResponseDto {
+
     private Long id;
-    private int number;
+    private int tableNumber;
     private int capacity;
+    private double pph;
     private TableStatus status;
 }

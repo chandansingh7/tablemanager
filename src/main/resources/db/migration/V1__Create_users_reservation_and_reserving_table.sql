@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS reserving_table
     id       BIGINT AUTO_INCREMENT PRIMARY KEY,
     number   INT                                                NOT NULL,
     capacity INT                                                NOT NULL,
+    pph      DOUBLE                                             NOT NULL,
     status   ENUM ('AVAILABLE', 'BOOKED', 'OCCUPIED', 'CLOSED') NOT NULL DEFAULT 'AVAILABLE'
 );
 
