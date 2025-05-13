@@ -3,12 +3,14 @@ package com.corecrew.tablemanager.services;
 import com.corecrew.tablemanager.dtos.ReservingTableRequestDto;
 import com.corecrew.tablemanager.dtos.ReservingTableResponseDto;
 import com.corecrew.tablemanager.models.ReservingTable;
+import com.corecrew.tablemanager.models.enums.TableStatus;
 import com.corecrew.tablemanager.repository.ReservingTableRepository;
 import com.corecrew.tablemanager.services.interfaces.ReservingTableService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,13 +66,38 @@ public class ReservingTableServiceImpl implements ReservingTableService {
 
         reservingTable.setNumber(dto.getTableNumber());
         reservingTable.setCapacity(dto.getCapacity());
+        reservingTable.setPph(dto.getPph());
         reservingTable.setStatus(dto.getStatus());
 
-        return mapToDto(reservingTable);
+        ReservingTable saved = tableRepository.save(reservingTable);
+
+        return mapToDto(saved);
     }
 
     @Override
     public void delete(Long id) {
         tableRepository.deleteById(id);
     }
+
+//    Dashboard requirement
+
+    public long getTotalTableCount() {
+        return tableRepository.count();
+    }
+
+    public Map<String, Long> getCounts() {
+        return Map.of(
+                "available", tableRepository.countByStatus(TableStatus.AVAILABLE),
+                "booked",    tableRepository.countByStatus(TableStatus.BOOKED),
+                "occupied",  tableRepository.countByStatus(TableStatus.OCCUPIED),
+                "closed",    tableRepository.countByStatus(TableStatus.CLOSED),
+                "total",     tableRepository.count()
+        );
+    }
+
+    public long getTableStatusCount(TableStatus status) {
+        return tableRepository.countByStatus(status);
+    }
+
+
 }
