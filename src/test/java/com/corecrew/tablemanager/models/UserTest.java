@@ -7,13 +7,4 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class UserTest {
 
-    @Test
-    void objectSerializer(){
-        System.out.println("hello world");
-    }
-
-    @Test
-    void objectDeserializer(){
-        assertEquals("A".getClass(), String.class);
-    }
 }

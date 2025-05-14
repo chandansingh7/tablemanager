@@ -22,5 +22,6 @@ public class ReservingTable {
     private double pph; //price per hour
 
     @Enumerated(EnumType.STRING)
+    @Builder.Default
     private TableStatus status = TableStatus.AVAILABLE;
 }

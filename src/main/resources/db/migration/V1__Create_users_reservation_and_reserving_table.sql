@@ -21,13 +21,21 @@ CREATE TABLE IF NOT EXISTS reserving_table
 -- Create 'reservation' table
 CREATE TABLE IF NOT EXISTS reservation
 (
-    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id     BIGINT    NOT NULL,
-    table_id    BIGINT    NOT NULL,
-    start_time  TIMESTAMP NOT NULL,
-    end_time    TIMESTAMP NOT NULL,
-    checked_in  BOOLEAN DEFAULT FALSE,
-    checked_out BOOLEAN DEFAULT FALSE,
-    FOREIGN KEY (user_id) REFERENCES users (id),
-    FOREIGN KEY (table_id) REFERENCES reserving_table (id)
-);
+    id                 BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id            BIGINT      NOT NULL,
+    table_id           BIGINT      NOT NULL,
+    checked_in_time    DATETIME(6) NOT NULL,
+    checked_out_time   DATETIME(6) NULL,
+    is_checked_in      BOOLEAN     NOT NULL DEFAULT FALSE,
+    is_checked_out     BOOLEAN     NOT NULL DEFAULT FALSE,
+    reservation_status ENUM ('PENDING', 'CONFIRMED', 'COMPLETED', 'CANCELLED')
+                                   NOT NULL DEFAULT 'COMPLETED',
+    CONSTRAINT fk_reservation_user
+        FOREIGN KEY (user_id) REFERENCES users (id)
+            ON UPDATE CASCADE ON DELETE RESTRICT,
+    CONSTRAINT fk_reservation_table
+        FOREIGN KEY (table_id) REFERENCES reserving_table (id)
+            ON UPDATE CASCADE ON DELETE RESTRICT
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;

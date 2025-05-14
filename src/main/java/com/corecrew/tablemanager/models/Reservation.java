@@ -1,5 +1,6 @@
 package com.corecrew.tablemanager.models;
 
+import com.corecrew.tablemanager.models.enums.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,14 +23,13 @@ public class Reservation {
     @ManyToOne
     private ReservingTable table;
 
-    private LocalDateTime startTime;
+    private LocalDateTime checkedInTime;
 
-    private LocalDateTime endTime;
+    private LocalDateTime checkedOutTime;
 
-    private boolean checkedIn = false;
+    private boolean isCheckedIn = false;
 
-    // To mark as checked out
-    private boolean checkedOut = false;
+    private boolean isCheckedOut = false;
 
-    // Constructors, getters, setters
+    private ReservationStatus reservationStatus = ReservationStatus.COMPLETED;
 }

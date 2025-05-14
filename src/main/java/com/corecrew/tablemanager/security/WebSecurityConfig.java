@@ -52,6 +52,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/v1/users/**").authenticated()
                         .requestMatchers("/api/v1/tables/**").authenticated()
+                        .requestMatchers("/api/v1/reservations/**").authenticated()
                         .requestMatchers("/{sortUrl}").permitAll()
                         .anyRequest().authenticated());
         httpSecurity.authenticationProvider(authenticationProvider());
